@@ -47,12 +47,21 @@
 }
 </style>
 <h1>api documentation for
-    <a href="https://github.com/feross/snazzy">snazzy (v6.0.0)</a>
+    <a href="https://github.com/feross/snazzy">snazzy (v7.0.0)</a>
 </h1>
 <h4>Format JavaScript Standard Style as Stylish (i.e. snazzy) output</h4>
 <div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.snazzy">module snazzy</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.snazzy.snazzy">
+            function <span class="apidocSignatureSpan"></span>snazzy
+            <span class="apidocSignatureSpan">(opts)</span>
+            </a>
+
+        </li>
 
         <li>
 
@@ -350,6 +359,27 @@
 
 
     <h2>
+        <a href="#apidoc.element.snazzy.snazzy" id="apidoc.element.snazzy.snazzy">
+        function <span class="apidocSignatureSpan"></span>snazzy
+        <span class="apidocSignatureSpan">(opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function CompactToStylishStream(opts) {
+  if (!(this instanceof CompactToStylishStream)) {
+    return new CompactToStylishStream(opts)
+  }
+  stream.Transform.call(this, opts)
+
+  this.exitCode = 0
+  this._buffer = []
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
         <a href="#apidoc.element.snazzy.super_" id="apidoc.element.snazzy.super_">
         function <span class="apidocSignatureSpan">snazzy.</span>super_
         <span class="apidocSignatureSpan">(options)</span>
@@ -534,9 +564,9 @@
   return Duplex.prototype.push.call(this, chunk, encoding);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-}
 stream.Transform.call(this, opts)
 
+this.exitCode = 0
 this._buffer = []
 }
 
@@ -830,7 +860,23 @@ toLowerCase()) &gt; -1)) throw new TypeError('Unknown encoding: ' + encoding);
 
   return res;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  ]
+})
+
+if (!process.stdin.isTTY || argv._[0] === '-' || argv.stdin) {
+  var snazzy = new CompactToStylishStream()
+
+  // Set the process exit code based on whether snazzy found errors
+  process.<span class="apidocCodeKeywordSpan">on</span>('exit', function (code) {
+    if (code === 0 &amp;&amp; snazzy.exitCode !== 0) {
+      process.exitCode = snazzy.exitCode
+    }
+  })
+
+  process.stdin.pipe(snazzy).pipe(process.stdout)
+} else {
+...</pre></li>
     </ul>
 
 
@@ -995,7 +1041,23 @@ toLowerCase()) &gt; -1)) throw new TypeError('Unknown encoding: ' + encoding);
 
   return dest;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  // Set the process exit code based on whether snazzy found errors
+  process.on('exit', function (code) {
+    if (code === 0 &amp;&amp; snazzy.exitCode !== 0) {
+      process.exitCode = snazzy.exitCode
+    }
+  })
+
+  process.stdin.<span class="apidocCodeKeywordSpan">pipe</span>(snazzy).pipe(process.stdout)
+} else {
+  console.error(`
+snazzy: 'standard' is no longer bundled with 'snazzy'. Install standard
+snazzy: ('npm install standard') then run 'standard | snazzy' instead.
+  `)
+  process.exitCode = 1
+}
+...</pre></li>
     </ul>
 
 
@@ -1021,9 +1083,9 @@ toLowerCase()) &gt; -1)) throw new TypeError('Unknown encoding: ' + encoding);
   return readableAddChunk(this, state, chunk, encoding, false);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-}
 stream.Transform.call(this, opts)
 
+this.exitCode = 0
 this._buffer = []
 }
 
@@ -1317,10 +1379,9 @@ var output = processResults(jsonResults)
   }
 
   // proxy certain important events.
-  var events = ['error', 'close', 'destroy', 'pause', 'resume'];
-  forEach(events, function (ev) {
-    stream.on(ev, self.emit.bind(self, ev));
-  });
+  for (var n = 0; n &lt; kProxyEvents.length; n++) {
+    stream.on(kProxyEvents[n], self.emit.bind(self, kProxyEvents[n]));
+  }
 
   // when we try to consume some more bytes, simply unpause the
   // underlying stream.
