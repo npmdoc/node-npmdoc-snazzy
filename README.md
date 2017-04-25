@@ -1,6 +1,6 @@
 # npmdoc-snazzy
 
-#### api documentation for  [snazzy (v7.0.0)](https://github.com/feross/snazzy)  [![npm package](https://img.shields.io/npm/v/npmdoc-snazzy.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-snazzy) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-snazzy.svg)](https://travis-ci.org/npmdoc/node-npmdoc-snazzy)
+#### basic api documentation for  [snazzy (v7.0.0)](https://github.com/feross/snazzy)  [![npm package](https://img.shields.io/npm/v/npmdoc-snazzy.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-snazzy) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-snazzy.svg)](https://travis-ci.org/npmdoc/node-npmdoc-snazzy)
 
 #### Format JavaScript Standard Style as Stylish (i.e. snazzy) output
 
